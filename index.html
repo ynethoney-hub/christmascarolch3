@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>크리스마스 캐럴 Chapter 3: 두 번째 유령 | 중3 영어 독해 & 이해도 퀴즈관</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Sans KR, Lora -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        warmbg: '#FAF6F0',
+                        paper: '#FFFDF9',
+                        brand: {
+                            50: '#FFFBEB',
+                            100: '#FEF3C7',
+                            500: '#D97706',
+                            600: '#B45309',
+                            700: '#92400E',
+                            800: '#78350F'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Lora', 'Georgia', 'serif'],
+                        sans: ['Noto Sans KR', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FAF6F0;
+            color: #26221F;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .book-page {
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+            background-image: linear-gradient(to right, rgba(0,0,0,0.02) 0%, rgba(255,255,255,0) 5%);
+        }
+        .sentence-item {
+            transition: all 0.2s ease;
+            border-radius: 6px;
+            padding: 4px 6px;
+            margin: 2px -6px;
+            cursor: pointer;
+            display: inline;
+            line-height: 1.8;
+        }
+        .sentence-item:hover {
+            background-color: #FEF3C7;
+            color: #78350F;
+        }
+        .sentence-item.active {
+            background-color: #FDE68A;
+            color: #92400E;
+            font-weight: 600;
+            box-shadow: 0 0 0 2px #F59E0B;
+        }
+        .sentence-item.completed {
+            border-bottom: 2px dashed #10B981;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F3EFE6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Header & Navigation -->
+    <header class="sticky top-0 z-30 bg-paper/90 backdrop-blur-md border-b border-amber-900/10 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="bg-amber-100 text-amber-800 p-2 rounded-xl text-lg font-bold">
+                    <i class="fa-solid fa-book-open"></i>
+                </span>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-gray-900 leading-tight">A Christmas Carol</h1>
+                    <p class="text-xs text-amber-700 font-medium hidden sm:block">Chapter 3: The Second Spirit (중3 영어 학습관)</p>
+                </div>
+            </div>
+
+            <!-- Mode Switcher Tabs -->
+            <div class="flex items-center bg-amber-100/70 p-1 rounded-xl border border-amber-200">
+                <button id="tab-study-btn" onclick="switchMode('study')" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition flex items-center space-x-1.5 bg-white text-amber-900 shadow-sm">
+                    <i class="fa-solid fa-book-reader"></i>
+                    <span>📖 본문 학습</span>
+                </button>
+                <button id="tab-quiz-btn" onclick="switchMode('quiz')" class="px-3.5 py-1.5 text-xs font-bold rounded-lg transition flex items-center space-x-1.5 text-gray-600 hover:text-amber-900">
+                    <i class="fa-solid fa-clipboard-question"></i>
+                    <span>📝 이해도 퀴즈 (10문제)</span>
+                </button>
+            </div>
+
+            <!-- Global Actions -->
+            <div class="hidden lg:flex items-center space-x-3">
+                <button id="toggle-all-trans-btn" onclick="toggleAllTranslations()" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-amber-300 text-amber-800 bg-amber-50 hover:bg-amber-100 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-language"></i>
+                    <span id="toggle-trans-label">전체 해석 보기</span>
+                </button>
+
+                <button onclick="openVocabModal()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-600 hover:bg-amber-700 text-white shadow-sm transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>핵심 단어장</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MODE 1: STUDY MODE (READING & PANEL) -->
+    <main id="view-study" class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Interactive Reading Book (7 cols) -->
+        <section class="lg:col-span-7 flex flex-col space-y-4">
+            <div class="book-page bg-paper border border-amber-900/10 rounded-2xl p-6 sm:p-8 flex-1 flex flex-col relative">
+                <!-- Chapter Header -->
+                <div class="text-center pb-6 mb-6 border-b border-amber-100">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200/60">[ Chapter 3 ]</span>
+                        <div class="flex items-center space-x-2 lg:hidden">
+                            <button onclick="toggleAllTranslations()" class="text-xs text-amber-800 bg-amber-100 px-2.5 py-1 rounded-md font-semibold">전체해석</button>
+                            <button onclick="openVocabModal()" class="text-xs text-white bg-amber-600 px-2.5 py-1 rounded-md font-semibold">단어장</button>
+                        </div>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-amber-900 mt-1">The Second Spirit</h2>
+                    <p class="text-xs text-gray-500 mt-1">문장을 클릭하면 다정한 중3 맞춤 해설을 볼 수 있어요!</p>
+                </div>
+
+                <!-- Paragraphs Container -->
+                <div id="reading-content" class="text-gray-800 font-serif text-base sm:text-lg space-y-6 leading-relaxed flex-1">
+                    <!-- Sentences populated dynamically -->
+                </div>
+
+                <!-- Reading Progress Footer -->
+                <div class="mt-8 pt-4 border-t border-amber-100 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                        <span>팁: 키보드 <b>[←] [→]</b> 화살표 키로 문장을 쉽게 넘길 수 있어요!</span>
+                    </div>
+                    <div class="flex items-center space-x-2 font-sans font-medium text-amber-800">
+                        <span id="progress-text">0 / 51 문장 학습됨 (0%)</span>
+                        <div class="w-24 bg-gray-200 h-2 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="bg-amber-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Sticky Study Inspector Panel (5 cols) -->
+        <section class="lg:col-span-5">
+            <div class="lg:sticky lg:top-20 space-y-4">
+                <div id="study-panel" class="bg-white border border-amber-900/15 rounded-2xl p-6 shadow-md transition-all">
+                    <!-- Dynamic Study Card Content -->
+                    <div id="panel-placeholder" class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-hand-pointer text-4xl mb-3 text-amber-300 animate-bounce"></i>
+                        <p class="text-sm font-medium text-gray-600">왼쪽 지문에서 문장을 클릭해보세요!</p>
+                        <p class="text-xs text-gray-400 mt-1">친절한 직독직해, 어휘, 중3 핵심 문법 포인트가 정리됩니다.</p>
+                    </div>
+
+                    <div id="panel-content" class="hidden space-y-5">
+                        <!-- Top Navigation & Audio inside Panel -->
+                        <div class="flex items-center justify-between pb-3 border-b border-gray-100">
+                            <span id="sentence-badge" class="px-2.5 py-1 text-xs font-bold bg-amber-100 text-amber-800 rounded-md">
+                                Sentence #1
+                            </span>
+                            <div class="flex items-center space-x-2">
+                                <button id="audio-btn" onclick="playAudio()" title="발음 듣기" class="px-3 py-1 text-xs font-medium bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-lg transition flex items-center space-x-1">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                    <span>듣기</span>
+                                </button>
+                                <button id="complete-btn" onclick="toggleSentenceComplete()" class="px-3 py-1 text-xs font-semibold rounded-lg border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition flex items-center space-x-1">
+                                    <i class="fa-regular fa-circle-check"></i>
+                                    <span id="complete-btn-text">학습 완료</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Active English Sentence -->
+                        <div class="bg-amber-50/70 p-4 rounded-xl border border-amber-200/60">
+                            <h3 id="panel-english" class="font-serif text-lg font-bold text-gray-900 leading-snug"></h3>
+                        </div>
+
+                        <!-- 1. Korean Translation -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider">
+                                <i class="fa-solid fa-language text-amber-600"></i>
+                                <span>1. 자연스러운 해석</span>
+                            </div>
+                            <p id="panel-translation" class="text-sm font-medium text-gray-800 bg-gray-50 p-3 rounded-lg leading-relaxed border border-gray-100"></p>
+                        </div>
+
+                        <!-- 2. Vocabulary & Expressions -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center space-x-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider">
+                                <i class="fa-solid fa-spell-check text-amber-600"></i>
+                                <span>2. 핵심 단어 & 표현</span>
+                            </div>
+                            <div id="panel-vocab" class="space-y-1.5 text-xs"></div>
+                        </div>
+
+                        <!-- 3. Middle School 3 Grammar Notes -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center space-x-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider">
+                                <i class="fa-solid fa-graduation-cap text-amber-600"></i>
+                                <span>3. 중3 핵심 문법 포인트</span>
+                            </div>
+                            <div id="panel-grammar" class="bg-amber-50/50 border border-amber-100 p-3 rounded-xl text-xs text-gray-700 space-y-2 leading-relaxed"></div>
+                        </div>
+
+                        <!-- 4. Friendly Mentor Tip -->
+                        <div class="space-y-1.5">
+                            <div class="flex items-center space-x-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider">
+                                <i class="fa-solid fa-comment-dots text-amber-600"></i>
+                                <span>4. 선생님의 한마디</span>
+                            </div>
+                            <div id="panel-tip" class="bg-orange-50 border border-orange-200/80 p-3 rounded-xl text-xs text-amber-900 flex items-start space-x-2 leading-relaxed">
+                                <i class="fa-solid fa-lightbulb text-amber-500 mt-0.5 text-sm"></i>
+                                <span id="panel-tip-text"></span>
+                            </div>
+                        </div>
+
+                        <!-- Previous / Next Controls -->
+                        <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                            <button onclick="navigateSentence(-1)" class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg transition flex items-center space-x-1">
+                                <i class="fa-solid fa-chevron-left"></i>
+                                <span>이전 문장</span>
+                            </button>
+                            <span id="sentence-nav-counter" class="text-xs text-gray-400 font-semibold">1 / 51</span>
+                            <button onclick="navigateSentence(1)" class="px-3 py-1.5 text-xs font-medium text-white bg-amber-600 hover:bg-amber-700 rounded-lg shadow-sm transition flex items-center space-x-1">
+                                <span>다음 문장</span>
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODE 2: COMPREHENSION QUIZ MODE -->
+    <main id="view-quiz" class="flex-1 max-w-4xl w-full mx-auto p-4 sm:p-6 lg:p-8 hidden">
+        <div class="bg-white border border-amber-900/10 rounded-2xl shadow-xl overflow-hidden flex flex-col">
+            <!-- Quiz Header Bar -->
+            <div class="bg-amber-900 text-white p-6 sm:p-8 relative">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-amber-800 text-amber-200 rounded-full text-xs font-bold uppercase tracking-wider mb-2">Chapter 3 Comprehension Test</span>
+                        <h2 class="text-2xl font-bold font-sans">이해도 확인 퀴즈 (10문항)</h2>
+                        <p class="text-xs text-amber-200 mt-1">본문 내용, 중3 어휘 및 핵심 문법을 얼마나 잘 이해했는지 테스트해봐요!</p>
+                    </div>
+                    <div id="quiz-header-score" class="bg-amber-800/80 border border-amber-700 px-4 py-2.5 rounded-xl text-center">
+                        <span class="text-xs text-amber-200 block">현재 점수</span>
+                        <span id="quiz-score-val" class="text-xl font-extrabold text-amber-100">0 / 100 점</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Progress Bar -->
+                <div class="mt-6">
+                    <div class="flex justify-between text-xs text-amber-200 font-medium mb-1.5">
+                        <span id="quiz-progress-text">문제 1 / 10</span>
+                        <span id="quiz-progress-pct">10% 진행 중</span>
+                    </div>
+                    <div class="w-full bg-amber-950/60 h-2.5 rounded-full overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-amber-400 h-full w-[10%] transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Question Container (Active Question View) -->
+            <div id="quiz-body" class="p-6 sm:p-8 space-y-6 flex-1">
+                <!-- Question Tag & Title -->
+                <div class="space-y-2">
+                    <div class="flex items-center space-x-2">
+                        <span id="quiz-tag" class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-amber-100 text-amber-800">어휘/구문</span>
+                        <span id="quiz-qnum" class="text-xs text-gray-500 font-semibold">Q1.</span>
+                    </div>
+                    <h3 id="quiz-question-text" class="text-lg sm:text-xl font-bold text-gray-900 leading-snug whitespace-pre-line"></h3>
+                </div>
+
+                <!-- Options List -->
+                <div id="quiz-options-container" class="space-y-3 pt-2">
+                    <!-- 4 options will be injected dynamically -->
+                </div>
+
+                <!-- Teacher Feedback Box (Shows after selecting an answer) -->
+                <div id="quiz-feedback-box" class="hidden p-4 sm:p-5 rounded-xl border space-y-2 text-sm leading-relaxed transition-all">
+                    <div class="flex items-center space-x-2 font-bold" id="quiz-feedback-title">
+                        <!-- Icon and status -->
+                    </div>
+                    <p id="quiz-feedback-text" class="text-xs sm:text-sm font-sans text-gray-800"></p>
+                </div>
+
+                <!-- Quiz Action Button -->
+                <div class="pt-4 flex justify-end">
+                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" disabled class="px-6 py-2.5 text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-xl shadow-md transition flex items-center space-x-2">
+                        <span id="quiz-next-label">다음 문제로</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Final Result Container (Shown upon completion) -->
+            <div id="quiz-result-view" class="p-6 sm:p-8 space-y-6 hidden">
+                <div class="text-center py-6 border-b border-gray-100 space-y-3">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-amber-100 text-amber-800 rounded-full text-4xl shadow-inner mb-2">
+                        <i id="result-icon" class="fa-solid fa-trophy text-amber-500"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-900">퀴즈 완료! 수고했어요!</h3>
+                    <div class="text-4xl font-extrabold text-amber-700" id="result-score-display">90점</div>
+                    <p id="result-message" class="text-sm font-medium text-gray-600 max-w-md mx-auto">
+                        대단해요! Chapter 3의 내용과 주요 문법을 아주 훌륭하게 잘 이해했군요!
+                    </p>
+                </div>
+
+                <!-- Answer Review List -->
+                <div class="space-y-4">
+                    <h4 class="font-bold text-gray-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-amber-600"></i>
+                        <span>문제별 정답 및 해설 다시보기</span>
+                    </h4>
+                    <div id="quiz-review-list" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+                        <!-- Injected review items -->
+                    </div>
+                </div>
+
+                <!-- Reset & Switch Actions -->
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-gray-100">
+                    <button onclick="switchMode('study')" class="w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-bold text-amber-900 bg-amber-100 hover:bg-amber-200 rounded-xl transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>본문으로 돌아가 다시 읽기</span>
+                    </button>
+                    <button onclick="restartQuiz()" class="w-full sm:w-auto px-6 py-2.5 text-xs sm:text-sm font-bold text-white bg-amber-600 hover:bg-amber-700 rounded-xl shadow-md transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>퀴즈 다시 풀기</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Vocabulary Quiz / Flashcard Modal -->
+    <div id="vocab-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+        <div class="bg-white border border-amber-900/10 rounded-2xl w-full max-w-xl p-6 shadow-2xl relative space-y-5">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                <div class="flex items-center space-x-2">
+                    <span class="p-2 bg-amber-100 text-amber-800 rounded-xl text-sm font-bold">
+                        <i class="fa-solid fa-book-bookmark"></i>
+                    </span>
+                    <div>
+                        <h3 class="font-bold text-gray-900">Chapter 3 핵심 단어 플래시카드</h3>
+                        <p class="text-xs text-gray-500">교과서 필수 어휘와 핵심 표현을 복습해 봐요!</p>
+                    </div>
+                </div>
+                <button onclick="closeVocabModal()" class="text-gray-400 hover:text-gray-600 text-lg p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Flashcard Display Area -->
+            <div class="text-center py-8 px-4 bg-amber-50/60 rounded-xl border border-amber-200/80 min-h-[180px] flex flex-col items-center justify-center cursor-pointer select-none transition" onclick="flipVocabCard()">
+                <span id="flashcard-pos" class="text-xs font-semibold px-2 py-0.5 bg-amber-200 text-amber-900 rounded-full mb-2">명사</span>
+                <h4 id="flashcard-word" class="text-2xl font-serif font-bold text-gray-900 mb-2">loose robe</h4>
+                <p id="flashcard-meaning" class="text-base font-bold text-amber-800 hidden">헐렁한 겉옷 (가운)</p>
+                <p id="flashcard-hint" class="text-xs text-gray-400 mt-3">💡 카드를 클릭하면 뜻을 확인할 수 있어요!</p>
+            </div>
+
+            <!-- Modal Controls -->
+            <div class="flex items-center justify-between">
+                <button onclick="prevVocabCard()" class="px-3 py-1.5 text-xs font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> 이전 단어
+                </button>
+                <span id="vocab-counter" class="text-xs text-gray-500 font-semibold">1 / 16</span>
+                <button onclick="nextVocabCard()" class="px-3 py-1.5 text-xs font-medium bg-amber-600 hover:bg-amber-700 text-white rounded-lg shadow-sm">
+                    다음 단어 <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Full Chapter 3 Data containing all 51 sentences analyzed for 3rd year middle school level
+        const sentencesData = [
+            // Paragraph 1
+            { id: 1, paragraph: 1, english: "A strange light falling on his bed woke Scrooge again.", translation: "그의 침대 위에 비치는 이상한 빛이 스크루지를 다시 깨웠어요.", vocab: [{ word: "strange", pos: "형용사", meaning: "이상한, 낯선" }, { word: "fall on", pos: "숙어", meaning: "(빛 등이) ~에 비치다" }, { word: "wake - woke", pos: "동사", meaning: "깨우다" }], grammar: ["<b>현재분사 후치수식:</b> <code>falling on his bed</code>가 명사 <code>A strange light</code>를 뒤에서 수식해 줘요! '~에 비치는 빛'으로 해석해요."], tip: "두 번째 유령이 등장하기 직전, 신비로운 빛을 느끼며 잠에서 깨어나는 장면입니다!" },
+            { id: 2, paragraph: 1, english: "The light seemed to be coming from the next room.", translation: "그 빛은 옆 방에서 나오고 있는 것처럼 보였어요.", vocab: [{ word: "seem to v", pos: "구문", meaning: "~인 것 같다" }, { word: "come from", pos: "숙어", meaning: "~에서 나오다" }], grammar: ["<b>seem to be -ing:</b> <code>seem to + 진행형</code>이 쓰여 '지금 나오고 있는 것처럼 보이다'라는 생생함을 전해 줘요."], tip: "옆방에서 은은하게 새어나오는 빛에 스크루지가 호기심을 갖게 돼요." },
+            
+            // Paragraph 2
+            { id: 3, paragraph: 2, english: "Certain that the second spirit had come, Scrooge went into the room.", translation: "두 번째 유령이 왔다고 확신한 스크루지는 그 방 안으로 들어갔어요.", vocab: [{ word: "certain that", pos: "구문", meaning: "~라고 확신하는" }, { word: "spirit", pos: "명사", meaning: "유령, 영혼" }], grammar: ["<b>분사구문:</b> 접속사와 주어가 생략된 형용사 구문 분사구문이에요.", "<b>과거완료 (had come):</b> 스크루지가 방에 들어간 시점(과거 went)보다 유령이 온 것이 더 먼저여서 <code>had + p.p.</code>를 썼어요."], tip: "스크루지가 도망치지 않고 유령을 맞이하러 이동해요." },
+            { id: 4, paragraph: 2, english: "He found it filled with plants and all kinds of food.", translation: "그는 그 방이 식물들과 온갖 종류의 음식들로 가득 차 있는 것을 발견했어요.", vocab: [{ word: "be filled with", pos: "숙어", meaning: "~로 가득 차다 (= be full of)" }, { word: "all kinds of", pos: "표현", meaning: "온갖 종류의" }], grammar: ["<b>5형식 구문 (find + O + O.C):</b> 방(it)이 채워진 '수동'의 관계이므로 목적격 보어로 과거분사 <code>filled</code>를 썼어요."], tip: "풍요롭고 따뜻한 크리스마스 분위기를 상징하는 음식들이 가득해요!" },
+            { id: 5, paragraph: 2, english: "And there was a happy giant sitting among them all.", translation: "그리고 그 모든 것들 사이에 한 행복한 거인이 앉아 있었어요.", vocab: [{ word: "giant", pos: "명사", meaning: "거인" }, { word: "among", pos: "전치사", meaning: "~ 사이에 (셋 이상)" }], grammar: ["<b>현재분사 수식:</b> <code>sitting among them all</code>이 주어인 거인을 뒤에서 꾸며 줘요."], tip: "이 인상 좋은 거인이 바로 '현재의 크리스마스 유령'이랍니다!" },
+            { id: 6, paragraph: 2, english: "The giant wore a loose robe, and he held a torch that filled the room with light.", translation: "그 거인은 헐렁한 겉옷을 입고 있었고, 방 안을 빛으로 가득 채우는 횃불을 들고 있었어요.", vocab: [{ word: "loose robe", pos: "명사 구문", meaning: "헐렁한 겉옷, 가운" }, { word: "torch", pos: "명사", meaning: "횃불" }, { word: "fill A with B", pos: "숙어", meaning: "A를 B로 채우다" }], grammar: ["<b>주격 관계대명사 that:</b> <code>that filled...</code>가 선행사 <code>a torch</code>를 수식해요."], tip: "유령이 든 횃불은 사람들에게 온기와 기쁨을 전해주는 마법 같은 도구예요." },
+
+            // Paragraph 3
+            { id: 7, paragraph: 3, english: "“Come in and get to know me better,” said the ghost happily.", translation: "“들어와서 나를 더 잘 알아가려무나.” 유령이 기쁘게 말했어요.", vocab: [{ word: "get to know", pos: "숙어", meaning: "~를 알게 되다" }], grammar: ["<b>get to + 동사원형:</b> '~하게 되다'라는 뜻이에요. 필수 숙어 <code>get to know</code>를 꼭 기억하세요!"], tip: "유령이 스크루지를 아주 따스하게 환영해주고 있어요." },
+            { id: 8, paragraph: 3, english: "“I am the Ghost of Christmas Present.”", translation: "“나는 '현재의 크리스마스 유령'이란다.”", vocab: [{ word: "present", pos: "명사", meaning: "현재 (선물이라는 뜻도 있어요!)" }], grammar: ["<b>고유명사:</b> 이름이나 특별한 칭호는 첫 글자를 대문자로 써요."], tip: "Present는 과거(Past)-현재(Present)-미래(Future) 중 '현재'를 의미해요!" },
+
+            // Paragraph 4
+            { id: 9, paragraph: 4, english: "“Spirit,” said Scrooge in a quiet voice, “take me where you will.", translation: "“유령님,” 스크루지가 조용한 목소리로 말했어요. “당신이 원하는 곳으로 저를 데려가 주세요.", vocab: [{ word: "in a quiet voice", pos: "표현", meaning: "조용한 목소리로" }, { word: "where you will", pos: "표현", meaning: "당신이 원하는 어디든지" }], grammar: ["<b>where you will:</b> <code>wherever you want</code>와 같은 의미의 고전적 표현이에요."], tip: "스크루지가 이전보다 훨씬 겸손해진 태도를 보입니다." },
+            { id: 10, paragraph: 4, english: "I learned a lesson from the spirit before you.", translation: "저는 당신 이전에 온 유령에게서 교훈을 얻었습니다.", vocab: [{ word: "learn a lesson", pos: "숙어", meaning: "교훈을 얻다" }], grammar: ["<b>단순 과거시제:</b> 지나간 일이라 과거동사 <code>learned</code>를 썼어요."], tip: "지난밤 과거의 유령에게서 얻은 배움을 떠올리고 있어요." },
+            { id: 11, paragraph: 4, english: "Tonight, if you have anything to teach me, let me benefit from it.”", translation: "오늘 밤, 제게 가르쳐 주실 것이 있다면, 제가 그것으로부터 교훈을 얻게 해주세요.”", vocab: [{ word: "anything", pos: "대명사", meaning: "무언가" }, { word: "benefit from", pos: "숙어", meaning: "~로부터 이득/교훈을 얻다" }], grammar: ["<b>to부정사의 형용사적 용법:</b> <code>anything to teach me</code> (-thing 대명사는 to부정사가 뒤에서 수식!).", "<b>사역동사 let:</b> <code>let + me(목적어) + benefit(동사원형)</code> 구문이에요."], tip: "배움을 받겠다는 스크루지의 열린 마음이 느껴져요." },
+
+            // Paragraph 5
+            { id: 12, paragraph: 5, english: "“Touch my robe!” said the spirit.", translation: "“내 옷을 잡으려무나!” 유령이 말했어요.", vocab: [{ word: "touch", pos: "동사", meaning: "만지다, 대다" }], grammar: ["<b>명령문:</b> 동사원형 <code>Touch</code>로 시작하는 직관적인 명령문이에요."], tip: "유령의 옷자락을 잡는 순간, 시공간 이동이 시작됩니다!" },
+
+            // Paragraph 6
+            { id: 13, paragraph: 6, english: "The next moment, Scrooge found himself carried along as the spirit flew through the town.", translation: "다음 순간, 스크루지는 유령이 마을을 지나 날아갈 때 자신이 휩쓸려 이동하고 있는 것을 알게 되었어요.", vocab: [{ word: "carry along", pos: "숙어", meaning: "휩쓸어가다, 싣고 가다" }, { word: "fly through", pos: "숙어", meaning: "~을 통과해 날아가다" }], grammar: ["<b>find + 재귀대명사 + 과거분사:</b> <code>found himself carried</code>에서 자신이 '이동되는' 수동 관계라 과거분사 <code>carried</code>를 썼어요."], tip: "유령과 함께 하늘을 날며 마을 사람들을 관찰하게 돼요." },
+            { id: 14, paragraph: 6, english: "His torch’s light gave cheer and plenty to all on whom it fell.", translation: "그의 횃불 빛은 그것이 비추는 모든 사람들에게 활기와 풍요로움을 주었어요.", vocab: [{ word: "cheer", pos: "명사", meaning: "기쁨, 활기" }, { word: "plenty", pos: "명사", meaning: "풍요로움" }], grammar: ["<b>전치사 + 관계대명사 (on whom):</b> <code>all [on whom it fell]</code> 구문으로 '빛이 내리쬐는 모든 사람들'을 의미해요."], tip: "가난한 사람들에게 온기와 축복을 전해주는 신비한 횃불입니다." },
+
+            // Paragraph 7
+            { id: 15, paragraph: 7, english: "And then Scrooge and the spirit stood before Bob Cratchit’s door.", translation: "그리고 나서 스크루지와 유령은 밥 크래칫의 문 앞에 섰어요.", vocab: [{ word: "stand before", pos: "숙어", meaning: "~ 앞에 서다" }], grammar: ["<b>복수 주어:</b> <code>Scrooge and the spirit</code>가 주어예요."], tip: "스크루지 밑에서 일하는 성실하고 가난한 직원 밥 크래칫의 집입니다." },
+            { id: 16, paragraph: 7, english: "The spirit let his light fall there, too.", translation: "유령은 그곳에도 자신의 빛이 내리쬐게 해주었어요.", vocab: [{ word: "fall", pos: "동사", meaning: "떨어지다, 비추다" }], grammar: ["<b>사역동사 let:</b> <code>let(사역동사) + his light(목적어) + fall(동사원형)</code> 구문입니다."], tip: "가난한 가정에도 따뜻한 축복을 비춰 주는 유령의 사랑입니다." },
+
+            // Paragraph 8
+            { id: 17, paragraph: 8, english: "In the house, Scrooge watched Mrs. Cratchit and four children cook their Christmas dinner.", translation: "집 안에서, 스크루지는 크래칫 부인과 네 아이가 크리스마스 저녁 식사를 요리하는 것을 지켜보았어요.", vocab: [{ word: "cook", pos: "동사", meaning: "요리하다" }], grammar: ["<b>지각동사 watch:</b> <code>watched(지각동사) + 목적어 + cook(동사원형)</code>! to부정사는 올 수 없어요."], tip: "온 가족이 정겹게 음식을 준비하는 따뜻한 분위기예요." },
+            { id: 18, paragraph: 8, english: "Then Mr. Cratchit returned from church.", translation: "그때 크래칫 씨가 교회에서 돌아왔어요.", vocab: [{ word: "return from", pos: "숙어", meaning: "~에서 돌아오다" }], grammar: ["<b>단순 과거시제:</b> <code>returned</code>로 지나간 사실을 전합니다."], tip: "예배를 드리고 돌아온 아빠의 모습이에요." },
+            { id: 19, paragraph: 8, english: "He carried another child on his shoulder.", translation: "그는 어깨에 또 다른 아이를 태우고 있었어요.", vocab: [{ word: "carry", pos: "동사", meaning: "업다, 태우다" }, { word: "shoulder", pos: "명사", meaning: "어깨" }], grammar: ["<b>another + 단수명사:</b> <code>another child</code>는 '또 다른 한 명의 아이'예요."], tip: "아빠의 어깨에 업혀 들어오는 아이가 누굴까요?" },
+            { id: 20, paragraph: 8, english: "The child was a boy born with a bad leg.", translation: "그 아이는 다리가 불편하게 태어난 소년이었어요.", vocab: [{ word: "be born with", pos: "숙어", meaning: "~을 가지고 태어나다" }], grammar: ["<b>과거분사 후치수식:</b> <code>born with a bad leg</code>가 <code>a boy</code>를 수식해 줘요."], tip: "몸은 아프지만 마음은 너무나 천사 같은 아이입니다." },
+            { id: 21, paragraph: 8, english: "His name was Tiny Tim.", translation: "그의 이름은 타이니 딤이었어요.", vocab: [{ word: "Tiny Tim", pos: "인물", meaning: "타이니 딤 (작은 딤)" }], grammar: ["<b>Tiny:</b> '아주 작은'이라는 형용사로 귀여운 칭호처럼 쓰여요."], tip: "이야기에서 가장 큰 감동을 전해주는 타이니 딤이 등장했습니다!" },
+
+            // Paragraph 9
+            { id: 22, paragraph: 9, english: "“How was church?” Mrs. Cratchit asked.", translation: "“교회는 어땠어요?” 크래칫 부인이 물었어요.", vocab: [{ word: "ask", pos: "동사", meaning: "묻다" }], grammar: ["<b>How was ~?:</b> 과거 상태나 안부를 묻는 친근한 의문문이에요."], tip: "남편과 아들을 맞이하는 부인의 따뜻한 질문이에요." },
+
+            // Paragraph 10
+            { id: 23, paragraph: 10, english: "“Fine, Mother!” said Tiny Tim.", translation: "“좋았어요, 엄마!” 타이니 딤이 말했어요.", vocab: [{ word: "fine", pos: "형용사", meaning: "좋은, 아주 잘" }], grammar: ["<b>직접인용 도치:</b> 인용문 뒤에서는 <code>said(동사) + Tiny Tim(주어)</code>로 도치될 수 있어요."], tip: "딤의 씩씩한 목소리가 들리는 것 같죠?" },
+            { id: 24, paragraph: 10, english: "“I was glad to be there on Christmas Day.", translation: "“크리스마스 날에 그곳에 있어서 정말 기뻤어요.", vocab: [{ word: "glad", pos: "형용사", meaning: "기쁜" }, { word: "on Christmas Day", pos: "전치사구", meaning: "크리스마스 날에" }], grammar: ["<b>to부정사 (감정의 원인):</b> <code>glad + to be there</code>는 '~에 있어서 기쁜'이라는 감정의 이유를 나타내요."], tip: "아픈 다리로도 크리스마스 예배를 기뻐하는 기특한 마음입니다." },
+            { id: 25, paragraph: 10, english: "I think people who saw me remembered the one who made lame men walk so long ago!”", translation: "저를 본 사람들이 아주 오래전에 다리 저는 이들을 걷게 만드신 분을 기억했을 거라고 생각해요!”", vocab: [{ word: "lame", pos: "형용사", meaning: "다리를 저는, 장애가 있는" }, { word: "so long ago", pos: "부사구", meaning: "아주 오랜 옛날에" }], grammar: ["<b>주격 관계대명사 who:</b> <code>people who saw me</code>와 <code>the one who made...</code> 두 번 쓰였어요.", "<b>사역동사 make:</b> <code>made(사역동사) + lame men(목적어) + walk(동사원형)</code> 구문이에요!"], tip: "자신의 장애를 남에게 희망을 주는 계기로 생각하는 딤의 깊은 성품에 감동받게 됩니다." },
+
+            // Paragraph 11
+            { id: 26, paragraph: 11, english: "The family laughed as they put dinner on the table.", translation: "가족들은 식탁 위에 저녁 음식을 차려놓으며 웃음꽃을 피웠어요.", vocab: [{ word: "put ~ on", pos: "숙어", meaning: "~에 놓다" }], grammar: ["<b>접속사 as:</b> '~하면서'라는 동시동작/시간을 나타내요."], tip: "소박하지만 행복이 가득한 저녁 준비 시간이에요." },
+            { id: 27, paragraph: 11, english: "Scrooge watched them eat and laugh and enjoy their time together.", translation: "스크루지는 그들이 함께 음식을 먹고, 웃고, 시간을 즐기는 모습을 지켜보았어요.", vocab: [{ word: "enjoy time together", pos: "표현", meaning: "함께 즐거운 시간을 보내다" }], grammar: ["<b>지각동사와 동사원형 병렬:</b> <code>watched + them + [eat and laugh and enjoy]</code> 전부 동사원형이어야 해요!"], tip: "진정한 행복이 무엇인지 스크루지가 마음으로 배우기 시작해요." },
+
+            // Paragraph 12
+            { id: 28, paragraph: 12, english: "“Spirit,” said Scrooge as he watched the family, “tell me if Tiny Tim will live.”", translation: "“유령님,” 가족을 지켜보던 스크루지가 말했어요. “타이니 딤이 살 수 있을지 제게 말해 주세요.”", vocab: [{ word: "tell + A + B", pos: "4형식", meaning: "A에게 B를 말해주다" }], grammar: ["<b>접속사 if (~인지 아닌지):</b> <code>tell me if ~</code>에서 if는 '만약 ~라면'이 아닌 '~인지 아닌지'라는 명사절 접속사예요!"], tip: "타인의 삶에 진심으로 마음을 쓰고 걱정하기 시작한 스크루지의 변화예요." },
+
+            // Paragraph 13
+            { id: 29, paragraph: 13, english: "“I see an empty chair.", translation: "“빈 의자가 하나 보이는구나.", vocab: [{ word: "empty", pos: "형용사", meaning: "비어 있는" }], grammar: ["<b>현재시제 see:</b> 눈앞의 환상을 직시하는 표현이에요."], tip: "빈 의자는 슬픈 미래를 암시하고 있어요." },
+            { id: 30, paragraph: 13, english: "I see a crutch without an owner.", translation: "주인 없는 목발 하나가 보이는구나.", vocab: [{ word: "crutch", pos: "명사", meaning: "목발" }, { word: "owner", pos: "명사", meaning: "주인" }, { word: "without", pos: "전치사", meaning: "~이 없는" }], grammar: ["<b>전치사구 수식:</b> <code>without an owner</code>가 명사 <code>crutch</code>를 꾸며 줘요."], tip: "딤이 사용하던 목발만 덩그러니 남게 된다는 뜻입니다." },
+            { id: 31, paragraph: 13, english: "If things go on as they are, the child will die.”", translation: "지금 상태대로 상황이 계속된다면, 그 아이는 죽게 될 것이다.”", vocab: [{ word: "go on", pos: "숙어", meaning: "계속되다" }, { word: "as they are", pos: "표현", meaning: "있는 그대로, 지금 상태대로" }], grammar: ["<b>조건 부사절의 시제:</b> <code>If</code>절 안에서는 미래라도 <b>현재시제(go)</b>를 써야 해요! (will go 금지! 중3 단골 시험문제)"], tip: "환경이 바뀌지 않으면 딤이 죽을 수밖에 없다는 유령의 경고입니다." },
+
+            // Paragraph 14
+            { id: 32, paragraph: 14, english: "This thought upset Scrooge.", translation: "이 생각은 스크루지를 마음 아프게 만들었어요.", vocab: [{ word: "upset", pos: "동사", meaning: "속상하게 하다" }], grammar: ["<b>3형식 문장:</b> <code>upset</code>의 과거형도 형태가 똑같이 <code>upset</code>입니다."], tip: "타인의 슬픔에 가슴 아파하는 스크루지의 인간성이 살아납니다." },
+
+            // Paragraph 15
+            { id: 33, paragraph: 15, english: "But the spirit had more to show him of that Christmas Day.", translation: "그러나 유령은 그 크리스마스 날에 그에게 보여줄 것이 더 많이 있었어요.", vocab: [{ word: "more", pos: "대명사", meaning: "더 많은 것" }], grammar: ["<b>to부정사의 형용사적 용법:</b> <code>more to show him</code>이 되어 '그에게 보여줄 더 많은 것'으로 해석돼요."], tip: "유령과의 여행은 계속 이어집니다." },
+            { id: 34, paragraph: 15, english: "They visited the home of Scrooge’s nephew.", translation: "그들은 스크루지의 조카의 집을 방문했어요.", vocab: [{ word: "nephew", pos: "명사", meaning: "조카" }], grammar: ["<b>소유격 's:</b> <code>Scrooge's nephew</code>는 조카 프레드(Fred)의 집을 뜻해요."], tip: "늘 삼촌을 따뜻하게 대해준 조카의 집입니다." },
+            { id: 35, paragraph: 15, english: "They visited poor homes, homes far from the city, and homes in other lands.", translation: "그들은 가난한 집들, 도시에서 먼 집들, 그리고 다른 나라들에 있는 집들을 방문했어요.", vocab: [{ word: "far from", pos: "숙어", meaning: "~에서 먼" }], grammar: ["<b>명사 병렬:</b> <code>poor homes</code>, <code>homes far...</code>, <code>homes in...</code> 처럼 반복 열거하여 상황을 생생히 묘사해요."], tip: "어느 곳이든 사람들은 크리스마스를 축하하고 있었어요." },
+            { id: 36, paragraph: 15, english: "All were enjoying time together with family and friends.", translation: "모두가 가족, 친구들과 함께 즐거운 시간을 보내고 있었지요.", vocab: [{ word: "together with", pos: "숙어", meaning: "~와 함께" }], grammar: ["<b>과거진행형 (were enjoying):</b> '즐기고 있던 중이었다'라는 생생한 상황을 전해요."], tip: "사랑하는 사람들과 마음을 나누는 소중한 순간입니다." },
+
+            // Paragraph 16
+            { id: 37, paragraph: 16, english: "Finally, it was time for Scrooge to return to his lonely apartment.", translation: "마침내, 스크루지가 그의 외로운 아파트로 돌아갈 시간이 되었어요.", vocab: [{ word: "lonely", pos: "형용사", meaning: "외로운, 쓸쓸한" }], grammar: ["<b>It is time for + 의미상주어 + to부정사:</b> <code>It was time [for Scrooge](의미상 주어) [to return](to부정사)</code> 구문! 중3 주요 구문이에요."], tip: "여행의 끝자락이 다가왔음을 전해 줍니다." },
+            { id: 38, paragraph: 16, english: "But the spirit had one more thing to show him there.", translation: "하지만 유령은 그곳에서 그에게 보여줄 것이 한 가지 더 남아있었어요.", vocab: [{ word: "one more thing", pos: "표현", meaning: "한 가지 더" }], grammar: ["<b>to부정사 형용사적 용법:</b> <code>thing to show him</code> 구문입니다."], tip: "마지막으로 유령이 보여주려는 충격적인 광경은 무엇일까요?" },
+
+            // Paragraph 17
+            { id: 39, paragraph: 17, english: "“Look here, man!” said the spirit.", translation: "“여기 좀 보게나, 여보게!” 유령이 말했어요.", vocab: [{ word: "look here", pos: "표현", meaning: "여기를 봐라" }], grammar: ["<b>호칭 man:</b> 스크루지를 심각하게 부르는 유령의 어조예요."], tip: "분위기가 갑자기 아주 진지해집니다." },
+            { id: 40, paragraph: 17, english: "Then he pulled two thin and ugly children from under his robe.", translation: "그리고 나서 그는 자신의 겉옷 속에서 마르고 흉측하게 생긴 두 아이를 꺼냈어요.", vocab: [{ word: "pull A from B", pos: "숙어", meaning: "B에서 A를 꺼내다" }, { word: "thin", pos: "형용사", meaning: "마른" }, { word: "ugly", pos: "형용사", meaning: "못생긴, 흉측한" }], grammar: ["<b>전치사 중복 (from under):</b> '옷 속 아래로부터'라는 장소를 구체적으로 나타내요."], tip: "유령의 옷 속에 숨어 있던 충격적인 두 아이가 모습을 드러내요." },
+            { id: 41, paragraph: 17, english: "They both had hungry and evil looks in their eyes.", translation: "그들 모두의 눈에는 굶주림과 악한 기운이 서려 있었어요.", vocab: [{ word: "evil", pos: "형용사", meaning: "사악한, 악한" }, { word: "look", pos: "명사", meaning: "표정, 눈빛" }], grammar: ["<b>both:</b> 둘 다를 의미하며 주어를 강조해 줘요."], tip: "아이들의 불쌍하면서도 섬뜩한 모습은 비극적인 사회 현상을 상징해요." },
+
+            // Paragraph 18
+            { id: 42, paragraph: 18, english: "“Are they yours?” Scrooge asked in horror.", translation: "“그들이 당신의 아이들인가요?” 스크루지가 공포에 질려 물었어요.", vocab: [{ word: "yours", pos: "소유대명사", meaning: "당신의 것" }, { word: "in horror", pos: "숙어", meaning: "공포에 질려" }], grammar: ["<b>in + 감정명사 (in horror):</b> '공포 속에서, 덜덜 떨며'라는 의미의 부사구예요."], tip: "두려움에 떨며 묻는 스크루지입니다." },
+
+            // Paragraph 19
+            { id: 43, paragraph: 19, english: "“They are Man’s.", translation: "“이들은 '인간'의 아이들이란다.", vocab: [{ word: "Man's", pos: "소유격", meaning: "인류의 것 (대문자 Man은 인류 전체)" }], grammar: ["<b>Man (대문자):</b> 관사 없이 대문자로 쓰인 Man은 '인간 전체, 인류'를 의미해요!"], tip: "유령의 아이가 아닌, 인간의 이기심이 낳은 비극이라는 뜻이에요." },
+            { id: 44, paragraph: 19, english: "The boy is Ignorance.", translation: "소년은 '무지(알지 못함)'이고,", vocab: [{ word: "Ignorance", pos: "명사", meaning: "무지, 알지 못함" }], grammar: ["<b>의인화:</b> 추상명사 '무지'를 대문자로 써서 소년의 이름처럼 의인화했어요."], tip: "배우지 못하고 무지하게 방치된 사회적 비극입니다." },
+            { id: 45, paragraph: 19, english: "The girl is Want.", translation: "소녀는 '결핍(가난)'이란다.", vocab: [{ word: "Want", pos: "명사", meaning: "결핍, 빈곤, 가난" }], grammar: ["<b>의인화:</b> Want는 '원하다'가 아닌 '가난, 부족함'이라는 명사이자 소녀의 이름이에요."], tip: "헐벗고 굶주린 이들의 빈곤을 상징해요." },
+            { id: 46, paragraph: 19, english: "Keep them both far from you.", translation: "그들 둘 다를 너에게서 멀리 떨어뜨려 놓아라.", vocab: [{ word: "keep A far from B", pos: "숙어", meaning: "A를 B로부터 멀리 두다" }], grammar: ["<b>명령문:</b> 무지와 가난에 빠지지 않도록 항상 경계하라는 유령의 지침이에요."], tip: "이 두 가지 비극을 멀리하라는 준엄한 경고입니다." },
+            { id: 47, paragraph: 19, english: "The boy is the worst.", translation: "특히 이 소년(무지)이 가장 위험하고 최악이란다.", vocab: [{ word: "the worst", pos: "최상급", meaning: "가장 나쁜 것, 최악" }], grammar: ["<b>최상급 (the worst):</b> bad - worse - the worst 순서죠."], tip: "가난보다 더 무서운 것은 이웃의 불행에 무관심한 '무지'임을 일깨워줘요." },
+            { id: 48, paragraph: 19, english: "Deny him as best you can!”", translation: "네가 할 수 있는 한 최선을 다해 이 소년을 거부하거라!”", vocab: [{ word: "deny", pos: "동사", meaning: "거부하다" }, { word: "as best one can", pos: "숙어", meaning: "할 수 있는 한 최선을 다해" }], grammar: ["<b>as ~ as one can:</b> '할 수 있는 한 최대로'라는 강조 구문이에요."], tip: "사회적 무관심과 무지를 배척하라는 강력한 당부입니다." },
+
+            // Paragraph 20
+            { id: 49, paragraph: 20, english: "Then the spirit disappeared.", translation: "그러자 유령은 사라졌어요.", vocab: [{ word: "disappear", pos: "동사", meaning: "사라지다 (자동사이므로 수동태 절대 불가!)" }], grammar: ["<b>자동사 disappear:</b> <code>was disappeared</code>로 쓰면 틀려요! 중3 시험 단골 단어!"], tip: "경고를 남기고 유령이 모습을 감춥니다." },
+            { id: 50, paragraph: 20, english: "But Scrooge was not alone.", translation: "그러나 스크루지는 혼자가 아니었어요.", vocab: [{ word: "alone", pos: "형용사", meaning: "혼자인" }], grammar: ["<b>보어 형용사:</b> <code>alone</code>은 명사를 직접 수식하지 않고 be동사 뒤 보어로만 쓰여요."], tip: "마지막 유령의 다가옴을 암시하는 긴장감 넘치는 표현이에요." },
+            { id: 51, paragraph: 20, english: "No sooner had he got back into bed than the third spirit appeared.", translation: "그가 침대로 돌아오자마자 세 번째 유령이 나타났어요.", vocab: [{ word: "no sooner ~ than ...", pos: "구문", meaning: "~하자마자 ...하다" }], grammar: ["<b>부정어 도치 구문 (No sooner + had + S + p.p. + than):</b> 부정어가 문두로 나와 주어와 조동사가 도치되었어요! <code>As soon as he got back into bed, the third spirit appeared</code>로 바꿀 수 있는 <b>중3 최고 핵심 도치 문법</b>입니다!"], tip: "곧바로 미래의 유령이 나타나는 흥미진진한 순간입니다!" }
+        ];
+
+        // Paragraph text groups for clear rendering
+        const paragraphStructure = [
+            { paraIndex: 1, sentenceIds: [1, 2] },
+            { paraIndex: 2, sentenceIds: [3, 4, 5, 6] },
+            { paraIndex: 3, sentenceIds: [7, 8] },
+            { paraIndex: 4, sentenceIds: [9, 10, 11] },
+            { paraIndex: 5, sentenceIds: [12] },
+            { paraIndex: 6, sentenceIds: [13, 14] },
+            { paraIndex: 7, sentenceIds: [15, 16] },
+            { paraIndex: 8, sentenceIds: [17, 18, 19, 20, 21] },
+            { paraIndex: 9, sentenceIds: [22] },
+            { paraIndex: 10, sentenceIds: [23, 24, 25] },
+            { paraIndex: 11, sentenceIds: [26, 27] },
+            { paraIndex: 12, sentenceIds: [28] },
+            { paraIndex: 13, sentenceIds: [29, 30, 31] },
+            { paraIndex: 14, sentenceIds: [32] },
+            { paraIndex: 15, sentenceIds: [33, 34, 35, 36] },
+            { paraIndex: 16, sentenceIds: [37, 38] },
+            { paraIndex: 17, sentenceIds: [39, 40, 41] },
+            { paraIndex: 18, sentenceIds: [42] },
+            { paraIndex: 19, sentenceIds: [43, 44, 45, 46, 47, 48] },
+            { paraIndex: 20, sentenceIds: [49, 50, 51] }
+        ];
+
+        // 10 Comprehension Quiz Questions Data
+        const quizQuestions = [
+            {
+                id: 1,
+                tag: "내용 이해",
+                question: "두 번째 유령이 자신의 겉옷 속에서 꺼내 스크루지에게 보여준 두 아이(소년과 소녀)가 상징하는 의미로 가장 적절한 것은?",
+                options: [
+                    "무지와 결핍",
+                    "탐욕과 분노",
+                    "게으름과 거짓",
+                    "질투와 원망"
+                ],
+                answer: 0,
+                explanation: "유령은 소년은 '무지(Ignorance)', 소녀는 '결핍/가난(Want)'이라고 소개해 줬어요! 인간의 무관심과 빈곤이라는 사회적 비극을 상징한답니다."
+            },
+            {
+                id: 2,
+                tag: "중3 핵심 문법",
+                question: "다음 문장의 밑줄 친 구문과 의미가 가장 가까운 것은?\n\"No sooner had he got back into bed than the third spirit appeared.\"",
+                options: [
+                    "As soon as he got back into bed, the third spirit appeared.",
+                    "Before he got back into bed, the third spirit had appeared.",
+                    "Although he got back into bed, the third spirit didn't appear.",
+                    "While he was getting into bed, the third spirit appeared."
+                ],
+                answer: 0,
+                explanation: "'No sooner ~ than ...'은 '~하자마자 ...하다'라는 뜻으로, 접속사 'As soon as ~' 구문과 완전히 의미가 똑같아요! 중3 시험 단골 도치 문법이에요."
+            },
+            {
+                id: 3,
+                tag: "내용 이해",
+                question: "윗글의 내용으로 보아 크래칫 씨의 막내 아들 타이니 딤(Tiny Tim)에 대한 설명으로 올바르지 않은 것은?",
+                options: [
+                    "자신의 아픈 다리로 인해 불평하며 슬퍼했다.",
+                    "태어날 때부터 한쪽 다리가 불편했다.",
+                    "크리스마스 예배에 다녀온 것을 기뻐했다.",
+                    "사람들이 자신을 보고 옛날 다리 저는 사람들을 걷게 하신 분을 떠올렸을 거라고 생각했다."
+                ],
+                answer: 0,
+                explanation: "타이니 딤은 다리가 불편하지만 불평하거나 슬퍼하지 않고, 성당에 다녀온 것을 기뻐하며 사람들에게 희망을 주고자 하는 아주 밝고 성숙한 아이였어요!"
+            },
+            {
+                id: 4,
+                tag: "중3 핵심 문법",
+                question: "다음 문장의 빈칸에 어법상 들어갈 수 없는 것은?\n\"Scrooge watched them ____ their time together.\"",
+                options: [
+                    "to enjoy",
+                    "enjoy",
+                    "enjoying",
+                    "laugh and enjoy"
+                ],
+                answer: 0,
+                explanation: "지각동사(watch)의 목적격 보어 자리에는 동사원형이나 현재분사(-ing)가 올 수 있어요. to부정사 형태인 'to enjoy'는 지각동사의 목적격 보어로 쓸 수 없답니다!"
+            },
+            {
+                id: 5,
+                tag: "중3 핵심 문법",
+                question: "다음 조건의 부사절 문장의 빈칸에 들어갈 알맞은 동사 형태는?\n\"If things ____ on as they are, the child will die.\"",
+                options: [
+                    "go",
+                    "will go",
+                    "went",
+                    "had gone"
+                ],
+                answer: 0,
+                explanation: "If가 이끄는 조건의 부사절에서는 미래의 일이라도 '현재시제'가 미래시제를 대신해요! 따라서 will go가 아닌 현재형 'go'를 써야 한답니다."
+            },
+            {
+                id: 6,
+                tag: "중3 핵심 문법",
+                question: "다음 문장에서 'had come'이라는 과거완료 시제가 쓰인 이유로 가장 적절한 것은?\n\"Certain that the second spirit had come, Scrooge went into the room.\"",
+                options: [
+                    "스크루지가 방에 들어간 과거 시점보다 유령이 도착한 시점이 더 먼저 일어났기 때문에",
+                    "유령이 도착한 일이 현재까지 계속되고 있기 때문에",
+                    "유령이 앞으로 도착할 예정임을 나타내기 위해",
+                    "가정법 과거완료 구문으로 사실과 반대되는 상상을 나타내기 위해"
+                ],
+                answer: 0,
+                explanation: "과거의 특정 시점(went into the room)보다 더 이전에 유령이 이미 도착해 있었으므로, '대과거'를 나타내는 과거완료(had + p.p.) 시제를 썼어요."
+            },
+            {
+                id: 7,
+                tag: "핵심 어휘",
+                question: "본문의 밑줄 친 단어 'lame'의 의미로 가장 알맞은 것은?\n\"the one who made lame men walk so long ago!\"",
+                options: [
+                    "다리를 저는, 장애가 있는",
+                    "키가 아주 큰",
+                    "눈이 보이지 않는",
+                    "마음이 따뜻한"
+                ],
+                answer: 0,
+                explanation: "'lame'은 다리를 저는, 신체적 장애가 있는이라는 뜻을 가진 본문의 교과서 핵심 형용사예요!"
+            },
+            {
+                id: 8,
+                tag: "주제 및 뉘앙스",
+                question: "두 번째 유령이 소년 '무지(Ignorance)'에 대해 스크루지에게 강력히 경고한 핵심 메시지는 무엇인가요?",
+                options: [
+                    "이웃의 고통과 사회적 문제에 무관심해지는 것을 경계해야 한다.",
+                    "책을 많이 읽지 않으면 부자가 될 수 없다.",
+                    "가난한 사람들을 멀리해야 자신의 재산을 지킬 수 있다.",
+                    "과거의 잘못을 잊어버리고 미래만 생각해야 한다."
+                ],
+                answer: 0,
+                explanation: "유령은 소년 무지(Ignorance)를 최악(the worst)이라고 부르며, 이웃의 불행에 눈감고 아는 척하지 않는 사회적 무관심과 냉대가 가장 위험함을 경고했답니다."
+            },
+            {
+                id: 9,
+                tag: "중3 핵심 문법",
+                question: "다음 중 밑줄 친 분사의 문법적 쓰임이 나머지 셋과 다른 하나는?",
+                options: [
+                    "He found the room filled with all kinds of food.",
+                    "A strange light falling on his bed woke Scrooge.",
+                    "There was a happy giant sitting among them all.",
+                    "I think people living in that town were happy."
+                ],
+                answer: 0,
+                explanation: "1번은 5형식 문장의 '목적격 보어'로 쓰인 과거분사(filled)이고, 2/3/4번은 모두 앞의 명사를 뒤에서 수식하는 '현재분사(falling, sitting, living)'의 형용사적 용법이에요!"
+            },
+            {
+                id: 10,
+                tag: "핵심 표현/숙어",
+                question: "다음 문장의 빈칸에 들어갈 가장 알맞은 전치사는?\n\"Tonight, if you have anything to teach me, let me benefit ____ it.\"",
+                options: [
+                    "from",
+                    "to",
+                    "at",
+                    "into"
+                ],
+                answer: 0,
+                explanation: "'~로부터 이득이나 교훈을 얻다'라는 표현은 `benefit from ~` 숙어로 완성돼요!"
+            }
+        ];
+
+        // Flashcards Vocabulary Data
+        const vocabFlashcards = [
+            { word: "loose robe", pos: "명사 구문", meaning: "헐렁한 겉옷, 가운" },
+            { word: "torch", pos: "명사", meaning: "횃불" },
+            { word: "benefit from", pos: "숙어", meaning: "~로부터 이득/교훈을 얻다" },
+            { word: "carry along", pos: "숙어", meaning: "휩쓸어가다, 싣고 가다" },
+            { word: "lame", pos: "형용사", meaning: "다리를 저는, 장애가 있는" },
+            { word: "crutch", pos: "명사", meaning: "목발" },
+            { word: "owner", pos: "명사", meaning: "주인, 소유자" },
+            { word: "as they are", pos: "표현", meaning: "있는 그대로, 현재 상태로" },
+            { word: "lonely", pos: "형용사", meaning: "외로운, 쓸쓸한" },
+            { word: "evil", pos: "형용사", meaning: "사악한, 악한" },
+            { word: "in horror", pos: "숙어", meaning: "공포에 질려, 무서워하며" },
+            { word: "Ignorance", pos: "명사", meaning: "무지, 알지 못함" },
+            { word: "Want", pos: "명사", meaning: "결핍, 빈곤, 가난" },
+            { word: "worst", pos: "명사/형용사", meaning: "최악의 것" },
+            { word: "deny", pos: "동사", meaning: "거부하다, 물리치다" },
+            { word: "no sooner ~ than", pos: "구문", meaning: "~하자마자 ...하다" }
+        ];
+
+        // App State Variables
+        let currentMode = 'study'; // 'study' or 'quiz'
+        let currentSentenceId = null;
+        let completedSentences = new Set();
+        let showAllTranslations = false;
+        let currentFlashcardIndex = 0;
+        let isFlashcardFlipped = false;
+
+        // Quiz State Variables
+        let quizCurrentIndex = 0;
+        let quizAnswers = new Array(quizQuestions.length).fill(null);
+        let quizSubmitted = new Array(quizQuestions.length).fill(false);
+        let quizScore = 0;
+
+        // Init Application on Load
+        window.onload = function() {
+            renderReadingPassage();
+            updateProgressBar();
+            setupKeyboardNav();
+            initQuiz();
+        };
+
+        // Switch between Reading Study mode and Quiz mode
+        function switchMode(mode) {
+            currentMode = mode;
+            const studyBtn = document.getElementById('tab-study-btn');
+            const quizBtn = document.getElementById('tab-quiz-btn');
+            const viewStudy = document.getElementById('view-study');
+            const viewQuiz = document.getElementById('view-quiz');
+
+            if (mode === 'study') {
+                viewStudy.classList.remove('hidden');
+                viewQuiz.classList.add('hidden');
+                studyBtn.className = "px-3.5 py-1.5 text-xs font-bold rounded-lg transition flex items-center space-x-1.5 bg-white text-amber-900 shadow-sm";
+                quizBtn.className = "px-3.5 py-1.5 text-xs font-bold rounded-lg transition flex items-center space-x-1.5 text-gray-600 hover:text-amber-900";
+            } else {
+                viewStudy.classList.add('hidden');
+                viewQuiz.classList.remove('hidden');
+                quizBtn.className = "px-3.5 py-1.5 text-xs font-bold rounded-lg transition flex items-center space-x-1.5 bg-white text-amber-900 shadow-sm";
+                studyBtn.className = "px-3.5 py-1.5 text-xs font-bold rounded-lg transition flex items-center space-x-1.5 text-gray-600 hover:text-amber-900";
+                renderQuizQuestion();
+            }
+        }
+
+        // Render Paragraphs and Interactive Sentences
+        function renderReadingPassage() {
+            const container = document.getElementById('reading-content');
+            container.innerHTML = '';
+
+            paragraphStructure.forEach(para => {
+                const paraDiv = document.createElement('p');
+                paraDiv.className = 'leading-relaxed mb-4 text-justify';
+
+                para.sentenceIds.forEach(id => {
+                    const sentenceData = sentencesData.find(s => s.id === id);
+                    if (!sentenceData) return;
+
+                    const span = document.createElement('span');
+                    span.id = `sentence-${id}`;
+                    span.className = `sentence-item ${completedSentences.has(id) ? 'completed' : ''}`;
+                    span.setAttribute('onclick', `selectSentence(${id})`);
+                    
+                    span.innerHTML = `${sentenceData.english} `;
+
+                    // Append inline translation container
+                    const transSpan = document.createElement('span');
+                    transSpan.id = `trans-inline-${id}`;
+                    transSpan.className = `block text-xs font-sans text-amber-900 bg-amber-100/70 p-1.5 rounded-md my-1 border-l-2 border-amber-500 ${showAllTranslations ? '' : 'hidden'}`;
+                    transSpan.innerText = ` 해석: ${sentenceData.translation}`;
+
+                    paraDiv.appendChild(span);
+                    paraDiv.appendChild(transSpan);
+                });
+
+                container.appendChild(paraDiv);
+            });
+        }
+
+        // Select a sentence and display in Study Panel
+        function selectSentence(id) {
+            currentSentenceId = id;
+            const data = sentencesData.find(s => s.id === id);
+            if (!data) return;
+
+            // Highlight Active Sentence in Reading View
+            document.querySelectorAll('.sentence-item').forEach(el => el.classList.remove('active'));
+            const activeSpan = document.getElementById(`sentence-${id}`);
+            if (activeSpan) {
+                activeSpan.classList.add('active');
+                activeSpan.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            // Show Panel Content
+            document.getElementById('panel-placeholder').classList.add('hidden');
+            document.getElementById('panel-content').classList.remove('hidden');
+
+            // Populate Panel Data
+            document.getElementById('sentence-badge').innerText = `Sentence #${data.id}`;
+            document.getElementById('panel-english').innerText = data.english;
+            document.getElementById('panel-translation').innerText = data.translation;
+            document.getElementById('sentence-nav-counter').innerText = `${data.id} / ${sentencesData.length}`;
+
+            // Render Vocabulary list
+            const vocabContainer = document.getElementById('panel-vocab');
+            vocabContainer.innerHTML = '';
+            data.vocab.forEach(v => {
+                const vDiv = document.createElement('div');
+                vDiv.className = 'flex items-center space-x-2 bg-gray-50 border border-gray-100 p-2 rounded-lg';
+                vDiv.innerHTML = `
+                    <span class="font-bold font-serif text-amber-900 text-xs sm:text-sm">${v.word}</span>
+                    <span class="text-[10px] px-1.5 py-0.5 bg-amber-100 text-amber-800 rounded-md font-semibold">${v.pos}</span>
+                    <span class="text-xs text-gray-600 font-medium">${v.meaning}</span>
+                `;
+                vocabContainer.appendChild(vDiv);
+            });
+
+            // Render Grammar Notes
+            const grammarContainer = document.getElementById('panel-grammar');
+            grammarContainer.innerHTML = '';
+            data.grammar.forEach(g => {
+                const gItem = document.createElement('div');
+                gItem.className = 'flex items-start space-x-1.5';
+                gItem.innerHTML = `<i class="fa-solid fa-check text-amber-600 mt-0.5 text-xs"></i><div>${g}</div>`;
+                grammarContainer.appendChild(gItem);
+            });
+
+            // Render Teacher's Tip
+            document.getElementById('panel-tip-text').innerText = data.tip;
+
+            updateCompleteButtonUI();
+        }
+
+        // Navigate previous/next sentence
+        function navigateSentence(direction) {
+            if (!currentSentenceId) {
+                selectSentence(1);
+                return;
+            }
+            let nextId = currentSentenceId + direction;
+            if (nextId >= 1 && nextId <= sentencesData.length) {
+                selectSentence(nextId);
+            }
+        }
+
+        function setupKeyboardNav() {
+            document.addEventListener('keydown', (e) => {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+                if (currentMode === 'study') {
+                    if (e.key === 'ArrowLeft') {
+                        navigateSentence(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        navigateSentence(1);
+                    }
+                }
+            });
+        }
+
+        function toggleSentenceComplete() {
+            if (!currentSentenceId) return;
+
+            if (completedSentences.has(currentSentenceId)) {
+                completedSentences.delete(currentSentenceId);
+            } else {
+                completedSentences.add(currentSentenceId);
+            }
+
+            const activeSpan = document.getElementById(`sentence-${currentSentenceId}`);
+            if (activeSpan) {
+                if (completedSentences.has(currentSentenceId)) {
+                    activeSpan.classList.add('completed');
+                } else {
+                    activeSpan.classList.remove('completed');
+                }
+            }
+
+            updateCompleteButtonUI();
+            updateProgressBar();
+        }
+
+        function updateCompleteButtonUI() {
+            const btn = document.getElementById('complete-btn');
+            const btnText = document.getElementById('complete-btn-text');
+            if (completedSentences.has(currentSentenceId)) {
+                btn.className = "px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center space-x-1";
+                btnText.innerText = "완료됨 ✓";
+            } else {
+                btn.className = "px-3 py-1 text-xs font-semibold rounded-lg border border-emerald-300 text-emerald-700 hover:bg-emerald-50 transition flex items-center space-x-1";
+                btnText.innerText = "학습 완료";
+            }
+        }
+
+        function updateProgressBar() {
+            const count = completedSentences.size;
+            const total = sentencesData.length;
+            const percentage = Math.round((count / total) * 100);
+
+            document.getElementById('progress-text').innerText = `${count} / ${total} 문장 (${percentage}%)`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        function toggleAllTranslations() {
+            showAllTranslations = !showAllTranslations;
+            const label = document.getElementById('toggle-trans-label');
+            label.innerText = showAllTranslations ? "전체 해석 숨기기" : "전체 해석 보기";
+
+            sentencesData.forEach(s => {
+                const transSpan = document.getElementById(`trans-inline-${s.id}`);
+                if (transSpan) {
+                    if (showAllTranslations) {
+                        transSpan.classList.remove('hidden');
+                    } else {
+                        transSpan.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+        function playAudio() {
+            if (!currentSentenceId) return;
+            const data = sentencesData.find(s => s.id === currentSentenceId);
+            if (!data) return;
+
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(data.english);
+                utterance.lang = 'en-US';
+                utterance.rate = 0.85;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('이 브라우저는 음성 재생(TTS)을 지원하지 않습니다.');
+            }
+        }
+
+        // ==================== QUIZ LOGIC ====================
+        function initQuiz() {
+            quizCurrentIndex = 0;
+            quizAnswers = new Array(quizQuestions.length).fill(null);
+            quizSubmitted = new Array(quizQuestions.length).fill(false);
+            quizScore = 0;
+            document.getElementById('quiz-body').classList.remove('hidden');
+            document.getElementById('quiz-result-view').classList.add('hidden');
+            renderQuizQuestion();
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        function renderQuizQuestion() {
+            const q = quizQuestions[quizCurrentIndex];
+            if (!q) return;
+
+            // Header progress
+            const total = quizQuestions.length;
+            const currentNum = quizCurrentIndex + 1;
+            const pct = Math.round((currentNum / total) * 100);
+
+            document.getElementById('quiz-progress-text').innerText = `문제 ${currentNum} / ${total}`;
+            document.getElementById('quiz-progress-pct').innerText = `${pct}% 진행 중`;
+            document.getElementById('quiz-progress-bar').style.width = `${pct}%`;
+
+            // Calculate current calculated score
+            let calculatedScore = 0;
+            quizAnswers.forEach((ans, idx) => {
+                if (ans !== null && ans === quizQuestions[idx].answer) {
+                    calculatedScore += 10;
+                }
+            });
+            document.getElementById('quiz-score-val').innerText = `${calculatedScore} / 100 점`;
+
+            // Question tag & text
+            document.getElementById('quiz-tag').innerText = q.tag;
+            document.getElementById('quiz-qnum').innerText = `Q${q.id}.`;
+            document.getElementById('quiz-question-text').innerText = q.question;
+
+            // Render 4 Options
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+
+            const isSubmitted = quizSubmitted[quizCurrentIndex];
+            const selectedIdx = quizAnswers[quizCurrentIndex];
+
+            q.options.forEach((optText, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = getOptionStyle(optIdx, selectedIdx, isSubmitted, q.answer);
+                btn.onclick = () => selectQuizOption(optIdx);
+                btn.disabled = isSubmitted;
+
+                const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
+                btn.innerHTML = `
+                    <div class="flex items-center space-x-3 text-left w-full">
+                        <span class="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs ${getOptionBadgeStyle(optIdx, selectedIdx, isSubmitted, q.answer)}">${letter}</span>
+                        <span class="text-sm font-medium flex-1">${optText}</span>
+                    </div>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+
+            // Feedback Box
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            const nextBtn = document.getElementById('quiz-next-btn');
+            const nextLabel = document.getElementById('quiz-next-label');
+
+            if (isSubmitted) {
+                feedbackBox.classList.remove('hidden');
+                const isCorrect = selectedIdx === q.answer;
+                if (isCorrect) {
+                    feedbackBox.className = "p-4 sm:p-5 rounded-xl border bg-emerald-50 border-emerald-200 text-emerald-900 space-y-2 text-sm leading-relaxed";
+                    document.getElementById('quiz-feedback-title').innerHTML = `
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>
+                        <span class="text-emerald-800">정답입니다! 참 잘했어요! 🎉</span>
+                    `;
+                } else {
+                    feedbackBox.className = "p-4 sm:p-5 rounded-xl border bg-rose-50 border-rose-200 text-rose-900 space-y-2 text-sm leading-relaxed";
+                    document.getElementById('quiz-feedback-title').innerHTML = `
+                        <i class="fa-solid fa-circle-xmark text-rose-600 text-lg"></i>
+                        <span class="text-rose-800">아쉬워요! 정답을 다시 확인해 보세요.</span>
+                    `;
+                }
+                document.getElementById('quiz-feedback-text').innerText = `💡 해설: ${q.explanation}`;
+                nextBtn.disabled = false;
+            } else {
+                feedbackBox.classList.add('hidden');
+                nextBtn.disabled = selectedIdx === null;
+            }
+
+            if (quizCurrentIndex === quizQuestions.length - 1) {
+                nextLabel.innerText = "결과 제출 및 보기";
+            } else {
+                nextLabel.innerText = "다음 문제로";
+            }
+        }
+
+        function getOptionStyle(optIdx, selectedIdx, isSubmitted, correctIdx) {
+            const base = "w-full p-3.5 rounded-xl border text-left transition-all flex items-center justify-between ";
+            if (!isSubmitted) {
+                if (selectedIdx === optIdx) {
+                    return base + "bg-amber-100 border-amber-500 text-amber-900 font-bold shadow-sm ring-2 ring-amber-400/50";
+                }
+                return base + "bg-white border-gray-200 text-gray-700 hover:bg-amber-50/50 hover:border-amber-300";
+            } else {
+                if (optIdx === correctIdx) {
+                    return base + "bg-emerald-100 border-emerald-500 text-emerald-900 font-bold ring-2 ring-emerald-400/50";
+                }
+                if (selectedIdx === optIdx && selectedIdx !== correctIdx) {
+                    return base + "bg-rose-100 border-rose-400 text-rose-900 font-semibold";
+                }
+                return base + "bg-gray-50 border-gray-150 text-gray-400 opacity-60";
+            }
+        }
+
+        function getOptionBadgeStyle(optIdx, selectedIdx, isSubmitted, correctIdx) {
+            if (!isSubmitted) {
+                if (selectedIdx === optIdx) {
+                    return "bg-amber-600 text-white";
+                }
+                return "bg-gray-100 text-gray-600";
+            } else {
+                if (optIdx === correctIdx) {
+                    return "bg-emerald-600 text-white";
+                }
+                if (selectedIdx === optIdx && selectedIdx !== correctIdx) {
+                    return "bg-rose-600 text-white";
+                }
+                return "bg-gray-200 text-gray-400";
+            }
+        }
+
+        function selectQuizOption(optIdx) {
+            if (quizSubmitted[quizCurrentIndex]) return;
+            quizAnswers[quizCurrentIndex] = optIdx;
+            quizSubmitted[quizCurrentIndex] = true; // Submit immediately on choice for friendly instant feedback
+            renderQuizQuestion();
+        }
+
+        function nextQuizQuestion() {
+            if (quizCurrentIndex < quizQuestions.length - 1) {
+                quizCurrentIndex++;
+                renderQuizQuestion();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-body').classList.add('hidden');
+            document.getElementById('quiz-result-view').classList.remove('hidden');
+
+            // Calculate final score
+            let finalScore = 0;
+            quizAnswers.forEach((ans, idx) => {
+                if (ans === quizQuestions[idx].answer) {
+                    finalScore += 10;
+                }
+            });
+
+            const scoreDisplay = document.getElementById('result-score-display');
+            const msgEl = document.getElementById('result-message');
+            const iconEl = document.getElementById('result-icon');
+
+            scoreDisplay.innerText = `${finalScore}점 / 100점`;
+
+            if (finalScore >= 90) {
+                iconEl.className = "fa-solid fa-trophy text-amber-500 text-4xl";
+                msgEl.innerText = "🎉 완벽해요! Chapter 3의 모든 내용을 완벽하게 마스터했군요!";
+            } else if (finalScore >= 70) {
+                iconEl.className = "fa-solid fa-star text-amber-500 text-4xl";
+                msgEl.innerText = "👍 아주 훌륭해요! 대부분의 주요 표현과 중3 핵심 문법을 잘 이해했어요!";
+            } else {
+                iconEl.className = "fa-solid fa-book-open-reader text-amber-600 text-4xl";
+                msgEl.innerText = "💪 좋은 시도예요! 헷갈린 문장들을 본문 학습 모드에서 다시 한번 살펴볼까요?";
+            }
+
+            // Render Review List
+            const reviewContainer = document.getElementById('quiz-review-list');
+            reviewContainer.innerHTML = '';
+
+            quizQuestions.forEach((q, idx) => {
+                const userAns = quizAnswers[idx];
+                const isCorrect = userAns === q.answer;
+
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-xl border text-xs sm:text-sm leading-relaxed space-y-1.5 ${isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`;
+
+                item.innerHTML = `
+                    <div class="flex items-center justify-between font-bold">
+                        <span class="${isCorrect ? 'text-emerald-800' : 'text-rose-800'}">
+                            ${isCorrect ? '✓ 정답' : '✗ 오답'} - Q${q.id}. [${q.tag}]
+                        </span>
+                        <span class="text-xs text-gray-500 font-normal">정답: ${String.fromCharCode(65 + q.answer)}. ${q.options[q.answer]}</span>
+                    </div>
+                    <p class="font-medium text-gray-800">${q.question}</p>
+                    <p class="text-xs text-gray-600 bg-white p-2.5 rounded-lg border border-gray-100">💡 <b>해설:</b> ${q.explanation}</p>
+                `;
+                reviewContainer.appendChild(item);
+            });
+        }
+
+        // Vocabulary Flashcard Modal Logic
+        function openVocabModal() {
+            document.getElementById('vocab-modal').classList.remove('hidden');
+            currentFlashcardIndex = 0;
+            isFlashcardFlipped = false;
+            updateFlashcardUI();
+        }
+
+        function closeVocabModal() {
+            document.getElementById('vocab-modal').classList.add('hidden');
+        }
+
+        function updateFlashcardUI() {
+            const card = vocabFlashcards[currentFlashcardIndex];
+            document.getElementById('flashcard-pos').innerText = card.pos;
+            document.getElementById('flashcard-word').innerText = card.word;
+            document.getElementById('flashcard-meaning').innerText = card.meaning;
+            document.getElementById('vocab-counter').innerText = `${currentFlashcardIndex + 1} / ${vocabFlashcards.length}`;
+
+            const meaningEl = document.getElementById('flashcard-meaning');
+            const hintEl = document.getElementById('flashcard-hint');
+
+            if (isFlashcardFlipped) {
+                meaningEl.classList.remove('hidden');
+                hintEl.innerText = '💡 카드를 다시 클릭하면 영단어가 보입니다.';
+            } else {
+                meaningEl.classList.add('hidden');
+                hintEl.innerText = '💡 카드를 클릭하면 뜻을 확인할 수 있어요!';
+            }
+        }
+
+        function flipVocabCard() {
+            isFlashcardFlipped = !isFlashcardFlipped;
+            updateFlashcardUI();
+        }
+
+        function nextVocabCard() {
+            if (currentFlashcardIndex < vocabFlashcards.length - 1) {
+                currentFlashcardIndex++;
+                isFlashcardFlipped = false;
+                updateFlashcardUI();
+            }
+        }
+
+        function prevVocabCard() {
+            if (currentFlashcardIndex > 0) {
+                currentFlashcardIndex--;
+                isFlashcardFlipped = false;
+                updateFlashcardUI();
+            }
+        }
+    </script>
+</body>
+</html>
